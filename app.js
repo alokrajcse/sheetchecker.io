@@ -1,9 +1,19 @@
+// Function to fetch tasks from Google Sheets
+function fetchTasks() {
+    fetch('https://script.google.com/macros/s/your_web_app_deployed_url/exec')
+        .then(response => response.json())
+        .then(data => {
+            updateTaskList(data);
+        })
+        .catch(error => console.error('Error fetching tasks:', error));
+}
+
 // Function to add a task using Fetch API
 function addTask() {
     const taskName = document.getElementById("taskInput").value;
 
     if (taskName.trim() !== "") {
-        fetch('https://script.google.com/macros/s/AKfycbwC4BMy8gG4gZ5RgU9OrKq3E6q1yjilJyhxEW2Cu_msblDUI-MDj7sy1vNZAYSZZsJjsg/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbw3wHVMnTSlGS6LhPUo9Hr5x-v1klspr-XAX9ot03lbFXJ88IcVquXKpUWhov0bJiWiLA/exec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -34,3 +44,6 @@ function updateTaskList(tasks) {
         taskList.appendChild(listItem);
     });
 }
+
+// Fetch tasks when the page loads
+fetchTasks();
