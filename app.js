@@ -1,13 +1,22 @@
-// Replace the SHEET_ID with your Google Sheets ID
-const SHEET_ID = "17Sk4SX8B2513br8RmO-8VQP7T2j-W9grPBfhtBQzXPM";
-
-// Function to add a task to the Google Sheets and update the web app
+// Function to add a task using Fetch API
 function addTask() {
     const taskName = document.getElementById("taskInput").value;
 
     if (taskName.trim() !== "") {
-        // Append the task to the Google Sheets
-        google.script.run.withSuccessHandler(updateTaskList).addTaskToSheet(taskName);
+        fetch('https://script.google.com/macros/s/AKfycbwC4BMy8gG4gZ5RgU9OrKq3E6q1yjilJyhxEW2Cu_msblDUI-MDj7sy1vNZAYSZZsJjsg/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                taskName: taskName
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            updateTaskList(data);
+        })
+        .catch(error => console.error('Error adding task:', error));
 
         // Clear the input field after adding the task
         document.getElementById("taskInput").value = "";
