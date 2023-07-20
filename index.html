@@ -81,8 +81,13 @@
 
     getDataFromSheet();
 
-    // Periodically update data every 5 seconds (adjust this as needed)
-    setInterval(getDataFromSheet, 5000);
+    // Create a custom function to trigger data update from Apps Script
+    function triggerDataUpdate() {
+      getDataFromSheet();
+    }
+
+    // Set a trigger to call the custom function every 5 seconds (adjust this as needed)
+    setInterval(triggerDataUpdate, 5000);
   </script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
